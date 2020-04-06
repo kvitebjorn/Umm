@@ -1,4 +1,4 @@
-module Umm
+module github.com/kvitebjorn/umm
 
 go 1.14
 
