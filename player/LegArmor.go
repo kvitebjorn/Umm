@@ -16,12 +16,12 @@ type BronzeLeg struct {
 // TODO: make this generic to the type of metal in the future, don't write one of these out for each metal type
 
 // GetLegDefensePower ... get the defense power of a bronze leg
-func (b *BronzeLeg) GetLegDefensePower() int {
+func (b BronzeLeg) GetLegDefensePower() int {
 	b.DefensePower = GetBronzeBaseDefensePower() * LegArmorBaseDefensePower
 	return b.DefensePower
 }
 
 // GetName ... the name of the bronze legs
-func (b *BronzeLeg) GetName() string {
+func (b BronzeLeg) GetName() string {
 	return "Bronze Legplate"
 }

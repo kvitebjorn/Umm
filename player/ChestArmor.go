@@ -16,12 +16,12 @@ type BronzeChest struct {
 // TODO: make this generic to the type of metal in the future, don't write one of these out for each metal type
 
 // GetChestDefensePower ... get the defense power of a bronze chest
-func (b *BronzeChest) GetChestDefensePower() int {
+func (b BronzeChest) GetChestDefensePower() int {
 	b.DefensePower = GetBronzeBaseDefensePower() * ChestArmorBaseDefensePower
 	return b.DefensePower
 }
 
 // GetName ... the name of the bronze chest
-func (b *BronzeChest) GetName() string {
+func (b BronzeChest) GetName() string {
 	return "Bronze Chestplate"
 }
