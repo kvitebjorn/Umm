@@ -3,11 +3,14 @@ package main
 import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/kvitebjorn/umm/player"
 )
 
 // This is required to draw debug texts.
 func update(screen *ebiten.Image) error {
-	ebitenutil.DebugPrint(screen, "Hello, Luka!")
+	luka := player.HumanPlayer{}
+	luka.Name = "Luka"
+	ebitenutil.DebugPrint(screen, "Hello, "+luka.GetName())
 	return nil
 }
 
