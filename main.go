@@ -11,10 +11,11 @@ import (
 )
 
 var (
-	text          = ""
-	counter       = 0
-	playerCreated = false
-	player1       = player.GetPlayer("HUMAN", "")
+	text            = ""
+	counter         = 0
+	playerCreated   = false
+	continuePressed = false
+	player1         = player.GetPlayer("HUMAN", "")
 )
 
 // repeatingKeyPressed return true when key is pressed considering the repeat state.
@@ -33,8 +34,7 @@ func repeatingKeyPressed(key ebiten.Key) bool {
 	return false
 }
 
-// This is required to draw debug texts.
-func update(screen *ebiten.Image) error {
+func updatePlayerCreationDialogueState(screen *ebiten.Image) {
 
 	// Add a string from InputChars, that returns string input by users.
 	// Note that InputChars result changes every frame, so you need to call this
@@ -56,29 +56,63 @@ func update(screen *ebiten.Image) error {
 
 	counter++
 
-	if ebiten.IsDrawingSkipped() {
+	// If the enter key is pressed, create a human player
+	if ebiten.IsKeyPressed(ebiten.KeyEnter) || ebiten.IsKeyPressed(ebiten.KeyKPEnter) {
+		player1 = player.GetPlayer("HUMAN", text)
+		playerCreated = true
+	}
+
+	return
+}
+
+func updateContinueDialogueState(screen *ebiten.Image) {
+	// If the enter key is pressed again, continue
+	if ebiten.IsKeyPressed(ebiten.KeyEnter) || ebiten.IsKeyPressed(ebiten.KeyKPEnter) {
+		continuePressed = true
+	}
+}
+
+func showPlayerCreationDialogue(screen *ebiten.Image) {
+	t := text
+	if counter%60 < 30 {
+		t += "_"
+	}
+	ebitenutil.DebugPrint(screen, "What is your name?\n"+t)
+}
+
+func showContinueDialogue(screen *ebiten.Image) {
+	ebitenutil.DebugPrint(screen, "Hello, "+player1.GetName()+"\nPress ENTER to continue...")
+}
+
+func doPlayerLogin(screen *ebiten.Image) error {
+	if !playerCreated {
+		showPlayerCreationDialogue(screen)
+		updatePlayerCreationDialogueState(screen)
+		counter = 0
+		return nil
+	} else if !continuePressed {
+		showContinueDialogue(screen)
+		counter++
+		if counter > 60 {
+			updateContinueDialogueState(screen)
+		}
 		return nil
 	}
 
-	if playerCreated {
-		ebitenutil.DebugPrint(screen, "Hello, "+player1.GetName())
+	if continuePressed {
+		ebitenutil.DebugPrint(screen, "Welcome to Umm...")
 	}
 
-	if !playerCreated {
+	return nil
+}
 
-		// If the enter key is pressed, create a human player
-		if ebiten.IsKeyPressed(ebiten.KeyEnter) || ebiten.IsKeyPressed(ebiten.KeyKPEnter) {
-			player1 = player.GetPlayer("HUMAN", text)
-			playerCreated = true
-			return nil
-		}
+// Updates the current frame (60 frames occur per second)
+func update(screen *ebiten.Image) error {
 
-		// Blink the cursor.
-		t := text
-		if counter%60 < 30 {
-			t += "_"
-		}
-		ebitenutil.DebugPrint(screen, "What is your name?\n"+t)
+	doPlayerLogin(screen)
+
+	if ebiten.IsDrawingSkipped() {
+		return nil
 	}
 
 	return nil
