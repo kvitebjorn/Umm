@@ -7,11 +7,11 @@ type ComputerPlayer struct {
 }
 
 // GetName ... get the player name
-func (p *ComputerPlayer) GetName() string {
+func (p ComputerPlayer) GetName() string {
 	return p.Name
 }
 
 // GetStats ... get the stats
-func (p *ComputerPlayer) GetStats() Stats {
+func (p ComputerPlayer) GetStats() Stats {
 	return p.PlayerStats
 }

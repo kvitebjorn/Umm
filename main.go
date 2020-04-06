@@ -8,8 +8,7 @@ import (
 
 // This is required to draw debug texts.
 func update(screen *ebiten.Image) error {
-	luka := player.HumanPlayer{}
-	luka.Name = "Luka"
+	luka := player.GetPlayer("HUMAN", "Luka")
 	ebitenutil.DebugPrint(screen, "Hello, "+luka.GetName())
 	return nil
 }

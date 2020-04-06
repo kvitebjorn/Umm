@@ -13,12 +13,12 @@ type HumanPlayer struct {
 }
 
 // GetName ... get the player name
-func (p *HumanPlayer) GetName() string {
+func (p HumanPlayer) GetName() string {
 	return p.Name
 }
 
 // GetStats ... get the stats
-func (p *HumanPlayer) GetStats() Stats {
+func (p HumanPlayer) GetStats() Stats {
 	return p.PlayerStats
 }
 
