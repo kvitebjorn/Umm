@@ -14,17 +14,23 @@ type HumanPlayer struct {
 }
 
 // GetName ... get the player name
-func (p HumanPlayer) GetName() string {
+func (p *HumanPlayer) GetName() string {
 	return p.Name
 }
 
 // GetPosition ... get the player's position
-func (p HumanPlayer) GetPosition() Position {
+func (p *HumanPlayer) GetPosition() Position {
 	return p.Whereabouts
 }
 
+// SetPosition ... set the player's position
+func (p *HumanPlayer) SetPosition(pos Position) {
+	p.Whereabouts.X = pos.X
+	p.Whereabouts.Y = pos.Y
+}
+
 // GetStats ... get the stats
-func (p HumanPlayer) GetStats() Stats {
+func (p *HumanPlayer) GetStats() Stats {
 	return p.PlayerStats
 }
 

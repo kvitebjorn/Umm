@@ -4,7 +4,7 @@ package player
 func GetPlayer(playerType, name string) Player {
 	switch playerType {
 	case "HUMAN":
-		newPlayer := HumanPlayer{Name: name}
+		var newPlayer = HumanPlayer{Name: name}
 		newPlayerStats := Stats{
 			Hp:  Stat{Name: "HP", Xp: 1, CurrentLevel: 10},
 			Str: Stat{Name: "Strength", Xp: 1, CurrentLevel: 1},
@@ -17,11 +17,11 @@ func GetPlayer(playerType, name string) Player {
 		newPlayer.Legplate = BronzeLeg{}
 		newPlayer.Sword = BronzeSword{}
 		newPlayer.Backpack = Inventory{}
-		return newPlayer
+		return &newPlayer
 
 	case "COMPUTER":
 		newPlayer := ComputerPlayer{Name: name}
-		return newPlayer
+		return &newPlayer
 	default:
 		newPlayer := ComputerPlayer{}
 		newPlayerStats := Stats{
@@ -31,6 +31,6 @@ func GetPlayer(playerType, name string) Player {
 			Atk: Stat{Name: "Attack", Xp: 1, CurrentLevel: 1},
 		}
 		newPlayer.PlayerStats = newPlayerStats
-		return newPlayer
+		return &newPlayer
 	}
 }

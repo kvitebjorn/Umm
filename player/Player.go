@@ -11,4 +11,5 @@ type Player interface {
 	GetName() string
 	GetStats() Stats
 	GetPosition() Position
+	SetPosition(pos Position)
 }

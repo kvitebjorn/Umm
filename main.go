@@ -149,6 +149,9 @@ func updatePlayerCreationDialogueState(screen *ebiten.Image) {
 	// If the enter key is pressed, create a human player
 	if ebiten.IsKeyPressed(ebiten.KeyEnter) || ebiten.IsKeyPressed(ebiten.KeyKPEnter) {
 		player1 = player.GetPlayer("HUMAN", text)
+		w, h := screen.Size()
+		pos := player.Position{X: w / 2, Y: h / 2}
+		player1.SetPosition(pos)
 		playerCreated = true
 	}
 
@@ -197,7 +200,7 @@ func drawPlayer(screen *ebiten.Image, pos player.Position) {
 	w, h := playerImage.Size()
 	scaleW := float64(tileSize) / float64(w)
 	scaleH := float64(tileSize) / float64(h)
-	op.GeoM.Translate(float64(pos.X), float64(pos.Y))
+	op.GeoM.Translate(float64(pos.X*tileSize), float64(pos.Y*tileSize))
 	op.GeoM.Scale(scaleW, scaleH)
 	op.Filter = ebiten.FilterLinear
 	screen.DrawImage(playerImage, op)
