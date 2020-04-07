@@ -26,7 +26,8 @@ const (
 )
 
 var (
-	tilesImage *ebiten.Image
+	tilesImage  *ebiten.Image
+	playerImage *ebiten.Image
 )
 
 func init() {
@@ -44,6 +45,18 @@ func init() {
 		log.Fatal(err)
 	}
 	tilesImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+
+	// Player img
+	playerImageFile, err := ebitenutil.OpenFile("resources/player.png")
+	if err != nil {
+		// Handle error
+	}
+	pimg, _, perr := image.Decode(playerImageFile)
+	if perr != nil {
+		log.Fatal(perr)
+	}
+	playerImage, _ = ebiten.NewImageFromImage(pimg, ebiten.FilterDefault)
+
 }
 
 var (
@@ -179,6 +192,17 @@ func doPlayerLogin(screen *ebiten.Image) error {
 	return nil
 }
 
+func drawPlayer(screen *ebiten.Image, pos player.Position) {
+	op := &ebiten.DrawImageOptions{}
+	w, h := playerImage.Size()
+	scaleW := float64(tileSize) / float64(w)
+	scaleH := float64(tileSize) / float64(h)
+	op.GeoM.Translate(float64(pos.X), float64(pos.Y))
+	op.GeoM.Scale(scaleW, scaleH)
+	op.Filter = ebiten.FilterLinear
+	screen.DrawImage(playerImage, op)
+}
+
 // Updates the current frame (60 frames occur per second)
 func update(screen *ebiten.Image) error {
 
@@ -206,6 +230,8 @@ func update(screen *ebiten.Image) error {
 			screen.DrawImage(tilesImage.SubImage(image.Rect(sx, sy, sx+tileSize, sy+tileSize)).(*ebiten.Image), op)
 		}
 	}
+
+	drawPlayer(screen, player1.GetPosition())
 
 	return nil
 }

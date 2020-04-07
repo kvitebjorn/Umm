@@ -3,6 +3,7 @@ package player
 // HumanPlayer ... a human controlled player
 type HumanPlayer struct {
 	Name        string
+	Whereabouts Position
 	PlayerStats Stats
 	Backpack    Inventory
 
@@ -15,6 +16,11 @@ type HumanPlayer struct {
 // GetName ... get the player name
 func (p HumanPlayer) GetName() string {
 	return p.Name
+}
+
+// GetPosition ... get the player's position
+func (p HumanPlayer) GetPosition() Position {
+	return p.Whereabouts
 }
 
 // GetStats ... get the stats

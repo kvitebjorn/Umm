@@ -6,7 +6,7 @@ func GetPlayer(playerType, name string) Player {
 	case "HUMAN":
 		newPlayer := HumanPlayer{Name: name}
 		newPlayerStats := Stats{
-			Hp:  Stat{Name: "HP", Xp: 1, CurrentLevel: 1},
+			Hp:  Stat{Name: "HP", Xp: 1, CurrentLevel: 10},
 			Str: Stat{Name: "Strength", Xp: 1, CurrentLevel: 1},
 			Def: Stat{Name: "Defense", Xp: 1, CurrentLevel: 1},
 			Atk: Stat{Name: "Attack", Xp: 1, CurrentLevel: 1},
